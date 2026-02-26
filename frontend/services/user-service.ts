@@ -7,6 +7,6 @@ export const userService = {
   },
 
   promoteToAdmin(id: string): Promise<User> {
-    return api.patch<User>(`/users/${id}`, { type: 'admin' });
+    return api.patch<User>(`/usertype?id=${id}`, { newType: 'admin' });
   },
 };

@@ -11,18 +11,18 @@ export const conferenceService = {
   },
 
   getById(id: string): Promise<Conference> {
-    return api.get<Conference>(`/conferences/${id}`);
+    return api.get<Conference>(`/conference/${id}`);
   },
 
   create(payload: ConferenceCreatePayload): Promise<Conference> {
-    return api.post<Conference>('/conferences', payload);
+    return api.post<Conference>('/conference', { conference: payload });
   },
 
   update(id: string, payload: ConferenceUpdatePayload): Promise<Conference> {
-    return api.put<Conference>(`/conferences/${id}`, payload);
+    return api.patch<Conference>(`/conference?id=${id}`, { conference: payload });
   },
 
   delete(id: string): Promise<void> {
-    return api.delete<void>(`/conferences/${id}`);
+    return api.delete<void>(`/conference?id=${id}`);
   },
 };
