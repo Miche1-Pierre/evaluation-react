@@ -4,7 +4,6 @@ import * as React from "react"
 import { CalendarDays, Users } from "lucide-react"
 import { Logo } from "@/components/shared/logo"
 import { NavUser } from "@/components/admin/nav-user"
-import { ThemeToggle } from "@/components/ui/theme-toggle"
 import {
   Sidebar,
   SidebarContent,
@@ -47,9 +46,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <div className="px-2 py-2">
-          <ThemeToggle />
-        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>

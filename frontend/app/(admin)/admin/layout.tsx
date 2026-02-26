@@ -7,6 +7,7 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 export default function AdminLayout({
   children,
@@ -21,6 +22,9 @@ export default function AdminLayout({
           <div className="flex flex-1 items-center gap-2 px-4">
             <SidebarTrigger />
             <Separator orientation="vertical" className="mr-2 h-4" />
+          </div>
+          <div className="px-4">
+            <ThemeToggle />
           </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4">{children}</main>
