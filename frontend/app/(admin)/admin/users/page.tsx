@@ -1,6 +1,7 @@
 'use client';
 
 import { useUsers, useChangeUserType, useDeleteUser } from '@/hooks/use-users';
+import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import {
   Table,
@@ -37,6 +38,7 @@ type ActionType = 'delete' | 'promote' | 'demote';
 
 export default function UsersPage() {
   const { data: users, isLoading } = useUsers();
+  const { user: currentUser } = useAuth();
   const changeUserType = useChangeUserType();
   const deleteUser = useDeleteUser();
   
@@ -117,7 +119,10 @@ export default function UsersPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {users.map((user) => (
+              {users.map((user) => {
+                const isCurrentUser = currentUser?.id === user.id;
+                
+                return (
                 <TableRow key={user.id}>
                   <TableCell className="font-medium flex items-center gap-2">
                     {user.type === 'admin' ? (
@@ -126,6 +131,9 @@ export default function UsersPage() {
                       <User className="size-4 text-muted-foreground" />
                     )}
                     {user.id}
+                    {isCurrentUser && (
+                      <Badge variant="outline" className="text-xs">Vous</Badge>
+                    )}
                   </TableCell>
                   <TableCell>
                     <Badge
@@ -135,6 +143,7 @@ export default function UsersPage() {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
+                    {!isCurrentUser && (
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon">
@@ -164,9 +173,11 @@ export default function UsersPage() {
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
+                    )}
                   </TableCell>
                 </TableRow>
-              ))}
+                );
+              })}
             </TableBody>
           </Table>
         )}
@@ -192,31 +203,6 @@ export default function UsersPage() {
               className={actionType === 'delete' ? 'bg-destructive hover:bg-destructive/90' : ''}
             >
               Confirmer
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </div>
-  );
-}
-            </TableBody>
-          </Table>
-        )}
-      </div>
-
-      <AlertDialog open={!!promoteId} onOpenChange={() => setPromoteId(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Promouvoir en administrateur ?</AlertDialogTitle>
-            <AlertDialogDescription>
-              L'utilisateur <strong>{promoteId}</strong> obtiendra les droits
-              d'administration et pourra gérer les conférences et utilisateurs.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Annuler</AlertDialogCancel>
-            <AlertDialogAction onClick={handlePromote}>
-              Promouvoir
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
