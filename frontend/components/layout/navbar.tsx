@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/shared/logo';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { LogOut, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -31,6 +32,8 @@ export function Navbar() {
         <Logo />
 
         <nav className="flex items-center gap-2">
+          <ThemeToggle />
+          
           {isAdmin && (
             <Button variant="ghost" size="sm" className="text-foreground/80 hover:text-foreground" asChild>
               <Link href="/admin/conferences">

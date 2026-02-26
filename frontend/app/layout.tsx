@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className="dark">
+    <html lang="fr" suppressHydrationWarning>
       <body className={`${poppins.variable} antialiased`}>
         <Providers>
           <TooltipProvider>{children}</TooltipProvider>

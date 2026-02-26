@@ -32,34 +32,57 @@ export async function extractDominantColor(imageUrl: string): Promise<string> {
         const imageData = ctx.getImageData(0, 0, width, height);
         const data = imageData.data;
 
-        // Compter les couleurs (simplification: regrouper par segments de 10)
-        const colorCounts: Record<string, number> = {};
+        // Compter les couleurs en privilégiant celles qui sont vives et visibles
+        const colorCounts: Record<string, { count: number; saturation: number }> = {};
 
         for (let i = 0; i < data.length; i += 4) {
           const r = Math.floor(data[i] / 10) * 10;
           const g = Math.floor(data[i + 1] / 10) * 10;
           const b = Math.floor(data[i + 2] / 10) * 10;
 
-          // Ignorer les couleurs trop claires ou trop sombres
+          // Ignorer les couleurs trop sombres ou trop claires (optimisé pour mode dark)
           const brightness = (r + g + b) / 3;
-          if (brightness < 30 || brightness > 240) continue;
+          if (brightness < 70 || brightness > 220) continue;
+
+          // Calculer la saturation (différence max-min)
+          const max = Math.max(r, g, b);
+          const min = Math.min(r, g, b);
+          const saturation = max - min;
+
+          // Ignorer les couleurs trop grises (faible saturation)
+          if (saturation < 20) continue;
 
           const key = `${r},${g},${b}`;
-          colorCounts[key] = (colorCounts[key] || 0) + 1;
+          if (!colorCounts[key]) {
+            colorCounts[key] = { count: 0, saturation };
+          }
+          // Pondérer par la saturation pour privilégier les couleurs vives
+          colorCounts[key].count += 1 + saturation / 100;
         }
 
-        // Trouver la couleur la plus fréquente
-        let maxCount = 0;
-        let dominantColor = "0,0,0";
+        // Trouver la couleur la plus fréquente avec meilleure saturation
+        let maxScore = 0;
+        let dominantColor = "100,100,200"; // Fallback bleu moyen
 
-        for (const [color, count] of Object.entries(colorCounts)) {
-          if (count > maxCount) {
-            maxCount = count;
+        for (const [color, { count, saturation }] of Object.entries(colorCounts)) {
+          const score = count * (1 + saturation / 200);
+          if (score > maxScore) {
+            maxScore = score;
             dominantColor = color;
           }
         }
 
-        const [r, g, b] = dominantColor.split(",").map(Number);
+        let [r, g, b] = dominantColor.split(",").map(Number);
+        
+        // Éclaircir si la couleur finale est encore trop sombre
+        const finalBrightness = (r + g + b) / 3;
+        if (finalBrightness < 100) {
+          const boost = 100 / finalBrightness;
+          r = Math.min(255, Math.floor(r * boost));
+          g = Math.min(255, Math.floor(g * boost));
+          b = Math.min(255, Math.floor(b * boost));
+        }
+
         const hex = rgbToHex(r, g, b);
         resolve(hex);
       } catch (error) {
@@ -82,9 +105,9 @@ export function generateSecondaryColor(primaryHex: string): string {
   const rgb = hexToRgb(primaryHex);
   if (!rgb) return primaryHex;
 
-  // Adoucir en augmentant légèrement chaque composante vers le blanc
+  // Éclaircir plus fortement pour le mode dark (lighten by 45%)
   const lighten = (value: number) =>
-    Math.min(255, Math.floor(value + (255 - value) * 0.25));
+    Math.min(255, Math.floor(value + (255 - value) * 0.45));
 
   const r = lighten(rgb.r);
   const g = lighten(rgb.g);
