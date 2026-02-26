@@ -23,29 +23,44 @@ export default function EditConferencePage({
   const updateConference = useUpdateConference();
 
   const handleSubmit = async (data: any) => {
-    const dateValue = new Date(data.date);
-    if (isNaN(dateValue.getTime())) {
-      throw new Error('Date invalide');
+    console.log('handleSubmit called with data:', data);
+    try {
+      const dateValue = new Date(data.date);
+      if (isNaN(dateValue.getTime())) {
+        throw new Error('Date invalide');
+      }
+
+      const payload = {
+        title: data.title,
+        date: dateValue.toISOString(),
+        description: data.description,
+        img: data.img,
+        content: data.content,
+        duration: data.duration || undefined,
+        design: {
+          mainColor: data.mainColor,
+          secondColor: data.secondColor,
+        },
+        speakers: data.speakers || [],
+        stakeholders: data.stakeholders || [],
+        osMap: data.osMap ? {
+          ...data.osMap,
+          // Remove coordinates if not valid
+          coordinates: (data.osMap.coordinates && 
+                       Array.isArray(data.osMap.coordinates) && 
+                       data.osMap.coordinates.length === 2)
+            ? data.osMap.coordinates
+            : undefined,
+        } : undefined,
+      };
+
+      console.log('Updating conference with payload:', payload);
+      await updateConference.mutateAsync({ id, payload });
+      router.push('/admin/conferences');
+    } catch (error) {
+      console.error('Error updating conference:', error);
+      throw error;
     }
-
-    const payload = {
-      title: data.title,
-      date: dateValue.toISOString(),
-      description: data.description,
-      img: data.img,
-      content: data.content,
-      duration: data.duration || undefined,
-      design: {
-        mainColor: data.mainColor,
-        secondColor: data.secondColor,
-      },
-      speakers: data.speakers || [],
-      stakeholders: data.stakeholders || [],
-      osMap: data.osMap || undefined,
-    };
-
-    await updateConference.mutateAsync({ id, payload });
-    router.push('/admin/conferences');
   };
 
   if (isLoading) {

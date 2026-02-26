@@ -13,7 +13,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Axiom",
-  description: "La plateforme des conférences tech",
+  description: "La plateforme des conférences",
 };
 
 export default function RootLayout({

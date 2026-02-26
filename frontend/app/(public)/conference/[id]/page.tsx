@@ -62,6 +62,7 @@ export default function ConferenceDetailPage({ params }: PageProps) {
           src={conference.img}
           alt={conference.title}
           fill
+          sizes="100vw"
           className="absolute inset-0 h-full w-full object-cover brightness-50"
           priority
         />

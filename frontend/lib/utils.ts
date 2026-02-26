@@ -33,7 +33,10 @@ export async function extractDominantColor(imageUrl: string): Promise<string> {
         const data = imageData.data;
 
         // Compter les couleurs en privilégiant celles qui sont vives et visibles
-        const colorCounts: Record<string, { count: number; saturation: number }> = {};
+        const colorCounts: Record<
+          string,
+          { count: number; saturation: number }
+        > = {};
 
         for (let i = 0; i < data.length; i += 4) {
           const r = Math.floor(data[i] / 10) * 10;
@@ -64,7 +67,9 @@ export async function extractDominantColor(imageUrl: string): Promise<string> {
         let maxScore = 0;
         let dominantColor = "100,100,200"; // Fallback bleu moyen
 
-        for (const [color, { count, saturation }] of Object.entries(colorCounts)) {
+        for (const [color, { count, saturation }] of Object.entries(
+          colorCounts,
+        )) {
           const score = count * (1 + saturation / 200);
           if (score > maxScore) {
             maxScore = score;
@@ -73,7 +78,7 @@ export async function extractDominantColor(imageUrl: string): Promise<string> {
         }
 
         let [r, g, b] = dominantColor.split(",").map(Number);
-        
+
         // Éclaircir si la couleur finale est encore trop sombre
         const finalBrightness = (r + g + b) / 3;
         if (finalBrightness < 100) {

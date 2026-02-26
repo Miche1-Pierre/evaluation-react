@@ -20,8 +20,8 @@ export interface ApiLoginResponse {
  * Decode JWT token to extract user information
  */
 function decodeJWT(token: string): { _id: string; type: string } {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replaceAll('-', '+').replaceAll('_', '/');
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replaceAll("-", "+").replaceAll("_", "/");
   const payload = JSON.parse(atob(base64));
   return payload;
 }
@@ -51,7 +51,7 @@ export const authService = {
     const decoded = decodeJWT(token);
     const user: AuthUser = {
       id: decoded._id,
-      type: decoded.type as 'user' | 'admin',
+      type: decoded.type as "user" | "admin",
     };
 
     return { token, user };

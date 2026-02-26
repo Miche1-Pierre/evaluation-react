@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 
 interface FavoritesState {
   favoriteIds: string[];
-  
+
   addFavorite: (conferenceId: string) => void;
   removeFavorite: (conferenceId: string) => void;
   toggleFavorite: (conferenceId: string) => void;

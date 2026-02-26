@@ -1,6 +1,6 @@
-import { useAuthStore } from '@/store/auth-store';
-import { authService } from '@/services/auth-service';
-import { useRouter } from 'next/navigation';
+import { useAuthStore } from "@/store/auth-store";
+import { authService } from "@/services/auth-service";
+import { useRouter } from "next/navigation";
 
 export function useAuth() {
   const store = useAuthStore();
@@ -13,7 +13,7 @@ export function useAuth() {
 
   function logout() {
     store.clearAuth();
-    router.push('/login');
+    router.push("/login");
   }
 
   return {

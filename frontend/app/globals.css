@@ -181,13 +181,16 @@
     width: 6px;
     height: 6px;
   }
+
   ::-webkit-scrollbar-track {
     background: transparent;
   }
+
   ::-webkit-scrollbar-thumb {
     background: hsl(0 0% 30%);
     border-radius: 9999px;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(0 0% 45%);
   }

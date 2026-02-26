@@ -32,7 +32,15 @@ export default function NewConferencePage() {
         },
         speakers: data.speakers || [],
         stakeholders: data.stakeholders || [],
-        osMap: data.osMap || undefined,
+        osMap: data.osMap ? {
+          ...data.osMap,
+          // Remove coordinates if not valid
+          coordinates: (data.osMap.coordinates && 
+                       Array.isArray(data.osMap.coordinates) && 
+                       data.osMap.coordinates.length === 2)
+            ? data.osMap.coordinates
+            : undefined,
+        } : undefined,
       };
 
       console.log('Creating conference with payload:', { ...payload, img: payload.img.slice(0, 50) + '...' });

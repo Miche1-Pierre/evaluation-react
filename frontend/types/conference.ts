@@ -37,5 +37,5 @@ export interface Conference {
   design: ConferenceDesign;
 }
 
-export type ConferenceCreatePayload = Omit<Conference, 'id'>;
+export type ConferenceCreatePayload = Omit<Conference, "id">;
 export type ConferenceUpdatePayload = Partial<ConferenceCreatePayload>;

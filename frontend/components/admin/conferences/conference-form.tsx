@@ -66,9 +66,10 @@ const conferenceSchema = z.object({
       addressl2: z.string().optional(),
       postalCode: z.string().optional(),
       city: z.string().optional(),
-      coordinates: z.tuple([z.number(), z.number()]).optional(),
+      coordinates: z.tuple([z.number(), z.number()]).optional().nullable(),
     })
-    .optional(),
+    .optional()
+    .nullable(),
 });
 
 type ConferenceFormData = z.infer<typeof conferenceSchema>;
@@ -115,7 +116,18 @@ export function ConferenceForm({
           secondColor: conference.design.secondColor,
           speakers: conference.speakers || [],
           stakeholders: conference.stakeholders || [],
-          osMap: conference.osMap || {
+          osMap: conference.osMap ? {
+            addressl1: conference.osMap.addressl1 || '',
+            addressl2: conference.osMap.addressl2 || '',
+            postalCode: conference.osMap.postalCode || '',
+            city: conference.osMap.city || '',
+            // Only include coordinates if it's a valid tuple
+            ...(conference.osMap.coordinates && 
+                Array.isArray(conference.osMap.coordinates) && 
+                conference.osMap.coordinates.length === 2
+              ? { coordinates: conference.osMap.coordinates as [number, number] }
+              : {}),
+          } : {
             addressl1: '',
             addressl2: '',
             postalCode: '',
@@ -219,7 +231,9 @@ export function ConferenceForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit, (errors) => {
+        console.log('Form validation errors:', errors);
+      })} className="space-y-6">
         <div className="grid gap-6 md:grid-cols-2">
           <FormField
             control={form.control}
@@ -340,6 +354,7 @@ export function ConferenceForm({
                     src={imagePreview}
                     alt="Aperçu"
                     fill
+                    sizes="(max-width: 768px) 100vw, 448px"
                     className="object-cover"
                   />
                 </div>

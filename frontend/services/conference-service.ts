@@ -1,13 +1,13 @@
-import { api } from '@/lib/api';
+import { api } from "@/lib/api";
 import type {
   Conference,
   ConferenceCreatePayload,
   ConferenceUpdatePayload,
-} from '@/types/conference';
+} from "@/types/conference";
 
 export const conferenceService = {
   getAll(): Promise<Conference[]> {
-    return api.get<Conference[]>('/conferences');
+    return api.get<Conference[]>("/conferences");
   },
 
   getById(id: string): Promise<Conference> {
@@ -15,7 +15,7 @@ export const conferenceService = {
   },
 
   create(payload: ConferenceCreatePayload): Promise<Conference> {
-    return api.post<Conference>('/conference', payload);
+    return api.post<Conference>("/conference", payload);
   },
 
   update(id: string, payload: ConferenceUpdatePayload): Promise<Conference> {
