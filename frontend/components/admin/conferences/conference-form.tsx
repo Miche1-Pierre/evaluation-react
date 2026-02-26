@@ -19,7 +19,9 @@ import { useRouter } from 'next/navigation';
 import { Loader2, Plus, Trash2, Wand2 } from 'lucide-react';
 import type { Conference } from '@/types/conference';
 import { extractDominantColor, generateSecondaryColor } from '@/lib/utils';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import Image from 'next/image';
 
 const conferenceSchema = z.object({
   id: z
@@ -29,7 +31,10 @@ const conferenceSchema = z.object({
   title: z.string().min(1, 'Le titre est requis'),
   date: z.string().min(1, 'La date est requise'),
   description: z.string().min(1, 'La description est requise'),
-  img: z.string().url('URL invalide'),
+  img: z.string().min(1, 'L\'image est requise').refine(
+    (val) => val.startsWith('http://') || val.startsWith('https://') || val.startsWith('data:image/'),
+    { message: 'Format invalide (URL ou image uploadée requise)' }
+  ),
   content: z.string().min(1, 'Le contenu est requis'),
   duration: z.string().optional(),
   mainColor: z
@@ -49,7 +54,10 @@ const conferenceSchema = z.object({
       firstname: z.string().min(1, 'Prénom requis'),
       lastname: z.string().min(1, 'Nom requis'),
       job: z.string().optional(),
-      img: z.string().url('URL invalide').optional().or(z.literal('')),
+      img: z.string().optional().refine(
+        (val) => !val || val.startsWith('http://') || val.startsWith('https://') || val.startsWith('data:image/') || val === '',
+        { message: 'Format invalide (URL ou image uploadée requise)' }
+      ),
     })
   ),
   osMap: z
@@ -78,6 +86,8 @@ export function ConferenceForm({
 }: ConferenceFormProps) {
   const router = useRouter();
   const [isGeneratingColors, setIsGeneratingColors] = useState(false);
+  const [imageMode, setImageMode] = useState<'url' | 'upload'>('url');
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   
   const form = useForm<ConferenceFormData>({
     resolver: zodResolver(conferenceSchema),
@@ -140,6 +150,17 @@ export function ConferenceForm({
     name: 'stakeholders',
   });
 
+  // Initialiser l'aperçu si une conférence existe
+  useEffect(() => {
+    if (conference?.img) {
+      setImagePreview(conference.img);
+      // Déterminer le mode en fonction du format de l'image
+      if (conference.img.startsWith('data:')) {
+        setImageMode('upload');
+      }
+    }
+  }, [conference]);
+
   const handleGenerateColors = async () => {
     const imgUrl = form.getValues('img');
     if (!imgUrl) {
@@ -158,6 +179,31 @@ export function ConferenceForm({
     } finally {
       setIsGeneratingColors(false);
     }
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Vérifier le type de fichier
+    if (!file.type.startsWith('image/')) {
+      alert('Veuillez sélectionner une image valide');
+      return;
+    }
+
+    // Vérifier la taille (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('L\'image ne doit pas dépasser 5MB');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const dataUrl = reader.result as string;
+      form.setValue('img', dataUrl);
+      setImagePreview(dataUrl);
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -234,30 +280,69 @@ export function ConferenceForm({
           name="img"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>URL de l'image</FormLabel>
-              <div className="flex gap-2">
-                <FormControl>
-                  <Input
-                    placeholder="https://images.unsplash.com/photo-..."
-                    {...field}
+              <FormLabel>Image de couverture</FormLabel>
+              <Tabs value={imageMode} onValueChange={(v) => setImageMode(v as 'url' | 'upload')}>
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="url">URL</TabsTrigger>
+                  <TabsTrigger value="upload">Upload</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="url" className="space-y-2">
+                  <div className="flex gap-2">
+                    <FormControl>
+                      <Input
+                        placeholder="https://images.unsplash.com/photo-..."
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          setImagePreview(e.target.value);
+                        }}
+                      />
+                    </FormControl>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleGenerateColors}
+                      disabled={isGeneratingColors || !field.value}
+                    >
+                      {isGeneratingColors ? (
+                        <Loader2 className="size-4 animate-spin" />
+                      ) : (
+                        <Wand2 className="size-4" />
+                      )}
+                    </Button>
+                  </div>
+                  <FormDescription>
+                    Collez l&apos;URL de l&apos;image. Cliquez sur 🪄 pour générer les couleurs.
+                  </FormDescription>
+                </TabsContent>
+
+                <TabsContent value="upload" className="space-y-2">
+                  <FormControl>
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="cursor-pointer"
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Formats acceptés: JPG, PNG, WebP (max 5MB)
+                  </FormDescription>
+                </TabsContent>
+              </Tabs>
+
+              {(field.value || imagePreview) && (
+                <div className="mt-4 relative aspect-video w-full max-w-md rounded-lg overflow-hidden border">
+                  <Image
+                    src={imagePreview || field.value}
+                    alt="Aperçu"
+                    fill
+                    className="object-cover"
                   />
-                </FormControl>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handleGenerateColors}
-                  disabled={isGeneratingColors || !field.value}
-                >
-                  {isGeneratingColors ? (
-                    <Loader2 className="size-4 animate-spin" />
-                  ) : (
-                    <Wand2 className="size-4" />
-                  )}
-                </Button>
-              </div>
-              <FormDescription>
-                URL complète de l'image de couverture. Cliquez sur la baguette pour générer les couleurs automatiquement.
-              </FormDescription>
+                </div>
+              )}
+              
               <FormMessage />
             </FormItem>
           )}

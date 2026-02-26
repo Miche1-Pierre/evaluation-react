@@ -1,5 +1,6 @@
 'use client';
 
+import { use } from 'react';
 import { ConferenceForm } from '@/components/admin/conferences/conference-form';
 import {
   useConference,
@@ -14,10 +15,11 @@ import { Skeleton } from '@/components/ui/skeleton';
 export default function EditConferencePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const router = useRouter();
-  const { data: conference, isLoading } = useConference(params.id);
+  const { id } = use(params);
+  const { data: conference, isLoading } = useConference(id);
   const updateConference = useUpdateConference();
 
   const handleSubmit = async (data: any) => {
@@ -37,7 +39,7 @@ export default function EditConferencePage({
       osMap: data.osMap || undefined,
     };
 
-    await updateConference.mutateAsync({ id: params.id, data: payload });
+    await updateConference.mutateAsync({ id, payload });
     router.push('/admin/conferences');
   };
 
