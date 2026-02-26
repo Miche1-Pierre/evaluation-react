@@ -299,32 +299,23 @@ export function ConferenceForm({
                 </TabsList>
                 
                 <TabsContent value="url" className="space-y-2">
-                  <div className="flex gap-2">
-                    <FormControl>
-                      <Input
-                        placeholder="https://images.unsplash.com/photo-..."
-                        {...field}
-                        onChange={(e) => {
-                          field.onChange(e);
-                          setImagePreview(e.target.value);
-                        }}
-                      />
-                    </FormControl>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={handleGenerateColors}
-                      disabled={isGeneratingColors || !field.value}
-                    >
-                      {isGeneratingColors ? (
-                        <Loader2 className="size-4 animate-spin" />
-                      ) : (
-                        <Wand2 className="size-4" />
-                      )}
-                    </Button>
-                  </div>
+                  <FormControl>
+                    <Input
+                      placeholder="https://images.unsplash.com/photo-..."
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        const url = e.target.value;
+                        if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+                          setImagePreview(url);
+                        } else {
+                          setImagePreview('');
+                        }
+                      }}
+                    />
+                  </FormControl>
                   <FormDescription>
-                    Collez l&apos;URL de l&apos;image. Cliquez sur 🪄 pour générer les couleurs.
+                    Collez l&apos;URL complète de l&apos;image (http:// ou https://)
                   </FormDescription>
                 </TabsContent>
 
@@ -343,10 +334,10 @@ export function ConferenceForm({
                 </TabsContent>
               </Tabs>
 
-              {(field.value || imagePreview) && (
+              {(imagePreview && (imagePreview.startsWith('http://') || imagePreview.startsWith('https://') || imagePreview.startsWith('data:'))) && (
                 <div className="mt-4 relative aspect-video w-full max-w-md rounded-lg overflow-hidden border">
                   <Image
-                    src={imagePreview || field.value}
+                    src={imagePreview}
                     alt="Aperçu"
                     fill
                     className="object-cover"
@@ -401,13 +392,37 @@ export function ConferenceForm({
           )}
         />
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <FormField
-            control={form.control}
-            name="mainColor"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Couleur principale</FormLabel>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-medium">Couleurs du thème</h3>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleGenerateColors}
+              disabled={isGeneratingColors || !form.watch('img')}
+            >
+              {isGeneratingColors ? (
+                <>
+                  <Loader2 className="mr-2 size-4 animate-spin" />
+                  Génération...
+                </>
+              ) : (
+                <>
+                  <Wand2 className="mr-2 size-4" />
+                  Générer depuis l&apos;image
+                </>
+              )}
+            </Button>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="mainColor"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Couleur principale</FormLabel>
                 <div className="flex gap-2">
                   <FormControl>
                     <Input type="color" className="w-20" {...field} />
@@ -443,6 +458,7 @@ export function ConferenceForm({
               </FormItem>
             )}
           />
+          </div>
         </div>
 
         {/* Intervenants */}

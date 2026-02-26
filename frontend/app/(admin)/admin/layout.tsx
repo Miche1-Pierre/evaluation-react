@@ -8,12 +8,28 @@ import {
 } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { useAuth } from '@/hooks/use-auth';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { isAuthenticated, isAdmin } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isAuthenticated || !isAdmin) {
+      router.push('/login');
+    }
+  }, [isAuthenticated, isAdmin, router]);
+
+  if (!isAuthenticated || !isAdmin) {
+    return null;
+  }
+
   return (
     <SidebarProvider>
       <AppSidebar />
