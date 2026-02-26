@@ -13,10 +13,10 @@ export interface LoginResponse {
 
 export const authService = {
   /**
-   * POST /auth/login
+   * POST /login
    * Returns a JWT token and the logged-in user.
    */
   async login(payload: LoginPayload): Promise<LoginResponse> {
-    return api.post<LoginResponse>('/auth/login', payload);
+    return api.post<LoginResponse>('/login', payload);
   },
 };
