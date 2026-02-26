@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import type { Conference } from '@/types/conference';
+import { FavoriteButton } from '@/components/shared/favorite-button';
 
 interface ConferenceCardProps {
   conference: Conference;
@@ -29,6 +30,14 @@ export function ConferenceCard({ conference, className }: ConferenceCardProps) {
           alt={conference.title}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
+        />
+      </div>
+
+      {/* Favorite button */}
+      <div className="absolute top-2 right-2 z-10">
+        <FavoriteButton 
+          conferenceId={conference.id} 
+          className="bg-black/50 backdrop-blur-sm hover:bg-black/70"
         />
       </div>
 
