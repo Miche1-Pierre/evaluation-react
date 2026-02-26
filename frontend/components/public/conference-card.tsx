@@ -49,7 +49,7 @@ export function ConferenceCard({ conference, className }: ConferenceCardProps) {
         }}
       >
         <div className="translate-y-1 transition-transform duration-300 group-hover:translate-y-0">
-          <h3 className="line-clamp-2 text-xs sm:text-sm font-bold text-white leading-tight mb-1">
+          <h3 className="line-clamp-2 text-xs sm:text-sm font-bold text-black dark:text-white leading-tight mb-1">
             {conference.title}
           </h3>
           <div className="flex items-center gap-2 text-white/75 text-xs">

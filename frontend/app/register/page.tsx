@@ -1,6 +1,7 @@
 import { RegisterForm } from "@/components/login/register-form";
 import { Logo } from "@/components/shared/logo";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default function RegisterPage() {
   return (
@@ -16,11 +17,18 @@ export default function RegisterPage() {
           </div>
         </div>
         <p className="text-center text-muted-foreground text-xs space-x-2">
-          <Link href="/" className="hover:text-foreground underline underline-offset-4 transition-colors">
-            ← Retour à l&apos;accueil
+          <Link
+            href="/"
+            className="hover:text-foreground underline underline-offset-4 transition-colors inline-flex items-center gap-1"
+          >
+            <ArrowLeft className="size-3" />
+            Retour à l&apos;accueil
           </Link>
           <span>•</span>
-          <Link href="/login" className="hover:text-foreground underline underline-offset-4 transition-colors">
+          <Link
+            href="/login"
+            className="hover:text-foreground underline underline-offset-4 transition-colors"
+          >
             Déjà un compte ? Se connecter
           </Link>
         </p>
@@ -34,7 +42,8 @@ export default function RegisterPage() {
             <Logo />
           </div>
           <p className="text-white/60 text-lg leading-relaxed max-w-sm">
-            Rejoignez la communauté tech.<br />
+            Rejoignez la communauté tech.
+            <br />
             Sauvegardez vos conférences préférées.
           </p>
         </div>

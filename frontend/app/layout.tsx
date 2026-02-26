@@ -23,6 +23,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning>
+      <head>
+        <link
+          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+          rel="stylesheet"
+        />
+      </head>
       <body className={`${poppins.variable} antialiased`}>
         <Providers>
           <TooltipProvider>{children}</TooltipProvider>

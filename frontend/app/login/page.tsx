@@ -1,6 +1,7 @@
 import { LoginForm } from "@/components/login/login-form";
 import { Logo } from "@/components/shared/logo";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default function LoginPage() {
   return (
@@ -16,8 +17,12 @@ export default function LoginPage() {
           </div>
         </div>
         <p className="text-center text-muted-foreground text-xs">
-          <Link href="/" className="hover:text-foreground underline underline-offset-4 transition-colors">
-            ← Retour à l&apos;accueil
+          <Link
+            href="/"
+            className="hover:text-foreground underline underline-offset-4 transition-colors inline-flex items-center gap-1"
+          >
+            <ArrowLeft className="size-3" />
+            Retour à l&apos;accueil
           </Link>
         </p>
       </div>
@@ -30,7 +35,8 @@ export default function LoginPage() {
             <Logo />
           </div>
           <p className="text-white/60 text-lg leading-relaxed max-w-sm">
-            La plateforme des conférences tech.<br />
+            La plateforme des conférences tech.
+            <br />
             Restez à la pointe de l&apos;innovation.
           </p>
         </div>
@@ -41,4 +47,3 @@ export default function LoginPage() {
     </div>
   );
 }
-

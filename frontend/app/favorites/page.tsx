@@ -6,35 +6,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { Heart, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { useAuth } from '@/hooks/use-auth';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 export default function FavoritesPage() {
-  const { isAuthenticated, isLoading: authLoading } = useAuth();
   const { data: favorites, isLoading } = useFavorites();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
-      router.push('/login');
-    }
-  }, [isAuthenticated, authLoading, router]);
-
-  if (authLoading || !isAuthenticated) {
-    return (
-      <div className="min-h-screen pt-24 px-6">
-        <div className="max-w-[1400px] mx-auto">
-          <Skeleton className="h-12 w-64 mb-8" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {[...Array(4)].map((_, i) => (
-              <Skeleton key={i} className="aspect-video rounded-xl" />
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen pt-24 px-6 pb-12">

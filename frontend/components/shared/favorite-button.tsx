@@ -3,8 +3,6 @@
 import { Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToggleFavorite, useIsFavorite } from '@/hooks/use-favorites';
-import { useAuth } from '@/hooks/use-auth';
-import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
 interface FavoriteButtonProps {
@@ -22,8 +20,6 @@ export function FavoriteButton({
   className,
   showText = false,
 }: FavoriteButtonProps) {
-  const { isAuthenticated } = useAuth();
-  const router = useRouter();
   const { data: favoriteStatus } = useIsFavorite(conferenceId);
   const toggleFavorite = useToggleFavorite();
 
@@ -32,11 +28,6 @@ export function FavoriteButton({
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-
-    if (!isAuthenticated) {
-      router.push('/login');
-      return;
-    }
 
     await toggleFavorite.mutateAsync({
       conferenceId,

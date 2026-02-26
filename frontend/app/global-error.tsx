@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { AlertTriangle } from 'lucide-react';
+import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { AlertTriangle } from "lucide-react";
 
 export default function GlobalError({
   error,
   reset,
 }: {
-  error: Error & { digest?: string };
-  reset: () => void;
+  readonly error: Error & { digest?: string };
+  readonly reset: () => void;
 }) {
   useEffect(() => {
-    console.error('Global error boundary caught:', error);
+    console.error("Global error boundary caught:", error);
   }, [error]);
 
   return (
@@ -31,7 +31,8 @@ export default function GlobalError({
                 Erreur critique
               </h1>
               <p className="text-muted-foreground">
-                Une erreur critique s&apos;est produite. Veuillez rafraîchir la page.
+                Une erreur critique s&apos;est produite. Veuillez rafraîchir la
+                page.
               </p>
             </div>
 

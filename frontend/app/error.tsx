@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { AlertCircle, Home, RefreshCcw } from 'lucide-react';
-import Link from 'next/link';
+import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { AlertCircle, Home, RefreshCcw } from "lucide-react";
+import Link from "next/link";
 
 export default function ErrorPage({
   error,
   reset,
 }: {
-  error: Error & { digest?: string };
-  reset: () => void;
+  readonly error: Error & { digest?: string };
+  readonly reset: () => void;
 }) {
   useEffect(() => {
     // Log l'erreur pour aider au debug
-    console.error('Error boundary caught:', error);
+    console.error("Error boundary caught:", error);
   }, [error]);
 
   return (
@@ -31,13 +31,14 @@ export default function ErrorPage({
             Une erreur est survenue
           </h1>
           <p className="text-muted-foreground">
-            Oups ! Quelque chose s&apos;est mal passé. Ne vous inquiétez pas, nous sommes là pour vous aider.
+            Oups ! Quelque chose s&apos;est mal passé. Ne vous inquiétez pas,
+            nous sommes là pour vous aider.
           </p>
         </div>
 
-        {process.env.NODE_ENV === 'development' && error.message && (
+        {process.env.NODE_ENV === "development" && error.message && (
           <div className="rounded-lg bg-muted p-4 text-left">
-            <p className="text-sm font-mono text-muted-foreground break-words">
+            <p className="text-sm font-mono text-muted-foreground wrap-break-word">
               {error.message}
             </p>
           </div>
