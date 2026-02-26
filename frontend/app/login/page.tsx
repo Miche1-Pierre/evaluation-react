@@ -1,5 +1,5 @@
-import { LoginForm } from "@/components/login-form";
-import { Logo } from "@/components/logo";
+import { LoginForm } from "@/components/login/login-form";
+import { Logo } from "@/components/shared/logo";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -24,9 +24,11 @@ export default function LoginPage() {
 
       {/* Right — decorative panel */}
       <div className="relative hidden lg:flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-card to-background" />
+        <div className="absolute inset-0 bg-linear-to-br from-primary/80 via-card to-background" />
         <div className="relative z-10 text-center px-10">
-          <p className="text-4xl font-bold text-white mb-4 tracking-tight">CyberConf</p>
+          <div className="flex items-center justify-center gap-3 mb-6 scale-150">
+            <Logo />
+          </div>
           <p className="text-white/60 text-lg leading-relaxed max-w-sm">
             La plateforme des conférences tech.<br />
             Restez à la pointe de l&apos;innovation.
