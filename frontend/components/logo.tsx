@@ -7,6 +7,8 @@ export function Logo({ className }: { readonly className?: string }) {
         <Image
           src="/axiom_dark.svg"
           alt="Logo"
+          width={16}
+          height={16}
           className={`dark:invert ${className}`}
         />
       </div>
