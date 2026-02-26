@@ -30,8 +30,9 @@ export function ConferenceHero({ conference }: Readonly<ConferenceHeroProps>) {
       <Image
         src={conference.img}
         alt={conference.title}
-        className="absolute inset-0 h-full w-full object-cover"
-        priority-hint="high"
+        fill
+        className="object-cover brightness-50"
+        priority
       />
 
       {/* Multi-stop gradient overlays */}
