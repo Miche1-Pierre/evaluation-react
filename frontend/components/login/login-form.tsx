@@ -6,6 +6,7 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { useAuth } from "@/hooks/use-auth";
+import { useAuthStore } from "@/store/auth-store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -39,7 +40,14 @@ export function LoginForm({
     setError(null);
     try {
       await login(values.id, values.password);
-      router.push('/');
+      
+      // After login, check user type from the store
+      const currentUser = useAuthStore.getState().user;
+      if (currentUser?.type === 'admin') {
+        router.push('/admin/conferences');
+      } else {
+        router.push('/');
+      }
     } catch {
       setError("Identifiant ou mot de passe incorrect.");
     }
