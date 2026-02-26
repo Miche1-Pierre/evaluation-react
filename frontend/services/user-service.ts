@@ -9,4 +9,12 @@ export const userService = {
   promoteToAdmin(id: string): Promise<User> {
     return api.patch<User>(`/usertype?id=${id}`, { newType: 'admin' });
   },
+
+  changeType(id: string, newType: 'admin' | 'user'): Promise<User> {
+    return api.patch<User>(`/usertype?id=${id}`, { newType });
+  },
+
+  delete(id: string): Promise<void> {
+    return api.delete<void>(`/user/${id}`);
+  },
 };

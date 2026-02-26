@@ -19,3 +19,20 @@ export function usePromoteUser() {
     onSuccess: () => qc.invalidateQueries({ queryKey: userKeys.all }),
   });
 }
+
+export function useChangeUserType() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, newType }: { id: string; newType: 'admin' | 'user' }) =>
+      userService.changeType(id, newType),
+    onSuccess: () => qc.invalidateQueries({ queryKey: userKeys.all }),
+  });
+}
+
+export function useDeleteUser() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => userService.delete(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: userKeys.all }),
+  });
+}
