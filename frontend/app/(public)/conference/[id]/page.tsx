@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import { use } from 'react';
-import { useConference } from '@/hooks/use-conferences';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
-import { CalendarDays, Clock, MapPin, Users, ArrowLeft } from 'lucide-react';
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
-import Link from 'next/link';
+import { use } from "react";
+import Image from "next/image";
+import { useConference } from "@/hooks/use-conferences";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { CalendarDays, Clock, MapPin, Users, ArrowLeft } from "lucide-react";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import Link from "next/link";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -40,22 +41,28 @@ export default function ConferenceDetailPage({ params }: PageProps) {
     );
   }
 
-  const formattedDate = format(new Date(conference.date), 'EEEE d MMMM yyyy', { locale: fr });
+  const formattedDate = format(new Date(conference.date), "EEEE d MMMM yyyy", {
+    locale: fr,
+  });
 
   return (
     <div
       className="min-h-screen bg-background"
-      style={{
-        '--conf-primary': conference.design.mainColor,
-        '--conf-secondary': conference.design.secondColor,
-      } as React.CSSProperties}
+      style={
+        {
+          "--conf-primary": conference.design.mainColor,
+          "--conf-secondary": conference.design.secondColor,
+        } as React.CSSProperties
+      }
     >
       {/* Hero */}
       <div className="relative h-[60vh] min-h-[420px] overflow-hidden">
-        <img
+        <Image
           src={conference.img}
           alt={conference.title}
-          className="absolute inset-0 h-full w-full object-cover"
+          fill
+          className="absolute inset-0 h-full w-full object-cover brightness-50"
+          priority
         />
         <div
           className="absolute inset-0"
@@ -82,7 +89,11 @@ export default function ConferenceDetailPage({ params }: PageProps) {
         <div className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-10 md:px-16 max-w-3xl">
           <Badge
             className="mb-3"
-            style={{ backgroundColor: 'var(--conf-secondary)', color: '#fff', border: 'none' }}
+            style={{
+              backgroundColor: "var(--conf-secondary)",
+              color: "#fff",
+              border: "none",
+            }}
           >
             Conférence
           </Badge>
@@ -120,13 +131,17 @@ export default function ConferenceDetailPage({ params }: PageProps) {
         {/* Color accent bar */}
         <div
           className="h-0.5 rounded-full"
-          style={{ background: `linear-gradient(to right, var(--conf-primary), var(--conf-secondary))` }}
+          style={{
+            background: `linear-gradient(to right, var(--conf-primary), var(--conf-secondary))`,
+          }}
         />
 
         {/* Rich content */}
         {conference.content && (
           <section>
-            <h2 className="text-foreground text-xl font-semibold mb-4">À propos</h2>
+            <h2 className="text-foreground text-xl font-semibold mb-4">
+              À propos
+            </h2>
             <div
               className="text-muted-foreground leading-relaxed prose prose-invert max-w-none"
               dangerouslySetInnerHTML={{ __html: conference.content }}
@@ -138,7 +153,10 @@ export default function ConferenceDetailPage({ params }: PageProps) {
         {conference.osMap?.city && (
           <section>
             <h2 className="text-foreground text-xl font-semibold mb-3 flex items-center gap-2">
-              <MapPin className="size-5" style={{ color: 'var(--conf-primary)' }} />
+              <MapPin
+                className="size-5"
+                style={{ color: "var(--conf-primary)" }}
+              />
               Lieu
             </h2>
             <p className="text-muted-foreground">
@@ -149,7 +167,7 @@ export default function ConferenceDetailPage({ params }: PageProps) {
                 conference.osMap.city,
               ]
                 .filter(Boolean)
-                .join(', ')}
+                .join(", ")}
             </p>
           </section>
         )}
@@ -158,7 +176,10 @@ export default function ConferenceDetailPage({ params }: PageProps) {
         {conference.speakers && conference.speakers.length > 0 && (
           <section>
             <h2 className="text-foreground text-xl font-semibold mb-4 flex items-center gap-2">
-              <Users className="size-5" style={{ color: 'var(--conf-primary)' }} />
+              <Users
+                className="size-5"
+                style={{ color: "var(--conf-primary)" }}
+              />
               Intervenants
             </h2>
             <div className="flex flex-wrap gap-3">
@@ -170,9 +191,10 @@ export default function ConferenceDetailPage({ params }: PageProps) {
                   <Avatar className="size-8">
                     <AvatarFallback
                       className="text-xs font-semibold text-white"
-                      style={{ backgroundColor: 'var(--conf-primary)' }}
+                      style={{ backgroundColor: "var(--conf-primary)" }}
                     >
-                      {speaker.firstname[0]}{speaker.lastname[0]}
+                      {speaker.firstname[0]}
+                      {speaker.lastname[0]}
                     </AvatarFallback>
                   </Avatar>
                   <span className="text-foreground text-sm font-medium">
@@ -187,7 +209,9 @@ export default function ConferenceDetailPage({ params }: PageProps) {
         {/* Stakeholders */}
         {conference.stakeholders && conference.stakeholders.length > 0 && (
           <section>
-            <h2 className="text-foreground text-xl font-semibold mb-4">Partenaires</h2>
+            <h2 className="text-foreground text-xl font-semibold mb-4">
+              Partenaires
+            </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {conference.stakeholders.map((s, i) => (
                 <div
@@ -195,12 +219,18 @@ export default function ConferenceDetailPage({ params }: PageProps) {
                   className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center"
                 >
                   <Avatar className="size-14">
-                    {s.img && <AvatarImage src={s.img} alt={`${s.firstname} ${s.lastname}`} />}
+                    {s.img && (
+                      <AvatarImage
+                        src={s.img}
+                        alt={`${s.firstname} ${s.lastname}`}
+                      />
+                    )}
                     <AvatarFallback
                       className="text-sm font-semibold text-white"
-                      style={{ backgroundColor: 'var(--conf-secondary)' }}
+                      style={{ backgroundColor: "var(--conf-secondary)" }}
                     >
-                      {s.firstname[0]}{s.lastname[0]}
+                      {s.firstname[0]}
+                      {s.lastname[0]}
                     </AvatarFallback>
                   </Avatar>
                   <div>
