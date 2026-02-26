@@ -12,7 +12,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "CyberConf",
+  title: "Axiom",
   description: "La plateforme des conférences tech",
 };
 
