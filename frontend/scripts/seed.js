@@ -94,6 +94,32 @@ async function seedAdmin() {
   }
 }
 
+async function cleanConferences() {
+  console.log('\n🧹 Cleaning existing conferences...');
+  try {
+    const existing = await request('/conferences');
+    if (existing && existing.length > 0) {
+      console.log(`  Found ${existing.length} conferences to delete`);
+      
+      let removed = 0;
+      for (const conf of existing) {
+        try {
+          // API expects path parameter: /conference/:id with auto-generated UUID
+          await request(`/conference/${conf.id}`, { method: 'DELETE' });
+          removed++;
+        } catch (err) {
+          console.warn(`  ⚠️  Failed to delete "${conf.title}":`, err.message.substring(0, 60));
+        }
+      }
+      console.log(`✅ Removed ${removed}/${existing.length} conferences`);
+    } else {
+      console.log('ℹ️  No conferences to clean');
+    }
+  } catch (err) {
+    console.warn('⚠️  Could not clean conferences:', err.message);
+  }
+}
+
 async function seedConferences() {
   console.log('\n📚 Creating sample conferences...');
 
@@ -352,6 +378,7 @@ async function main() {
   
   try {
     await seedAdmin();
+    await cleanConferences();
     await seedConferences();
     console.log('\n✨ Seed completed successfully!');
     console.log('\n💡 You can now login with:');
