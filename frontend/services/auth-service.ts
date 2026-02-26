@@ -16,6 +16,16 @@ export interface ApiLoginResponse {
   Token?: string;
 }
 
+/**
+ * Decode JWT token to extract user information
+ */
+function decodeJWT(token: string): { _id: string; type: string } {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replaceAll('-', '+').replaceAll('_', '/');
+  const payload = JSON.parse(atob(base64));
+  return payload;
+}
+
 export const authService = {
   /**
    * POST /login
@@ -26,10 +36,8 @@ export const authService = {
       "/login",
       payload,
     );
-    console.log("Login API response:", response);
 
-    // Handle different response formats from the API
-    // API might return just the token string, or { token, ... }
+    // API returns the token as a plain string
     const token =
       typeof response === "string"
         ? response
@@ -39,10 +47,11 @@ export const authService = {
       throw new Error("No token received from API");
     }
 
-    // Construct user from the id in the payload since API doesn't return user object
+    // Decode JWT to extract user info
+    const decoded = decodeJWT(token);
     const user: AuthUser = {
-      id: payload.id,
-      type: "user", // Default to user, will be updated if admin
+      id: decoded._id,
+      type: decoded.type as 'user' | 'admin',
     };
 
     return { token, user };
