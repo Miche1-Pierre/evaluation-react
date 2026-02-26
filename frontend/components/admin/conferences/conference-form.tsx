@@ -89,13 +89,24 @@ export function ConferenceForm({
   const [imageMode, setImageMode] = useState<'url' | 'upload'>('url');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   
+  // Convertir la date en format YYYY-MM-DD pour l'input type="date"
+  const formatDateForInput = (dateString: string): string => {
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return '';
+      return date.toISOString().split('T')[0];
+    } catch {
+      return '';
+    }
+  };
+
   const form = useForm<ConferenceFormData>({
     resolver: zodResolver(conferenceSchema),
     defaultValues: conference
       ? {
           id: conference.id,
           title: conference.title,
-          date: conference.date.split('T')[0],
+          date: formatDateForInput(conference.date),
           description: conference.description,
           img: conference.img,
           content: conference.content,

@@ -12,10 +12,15 @@ export default function NewConferencePage() {
   const createConference = useCreateConference();
 
   const handleSubmit = async (data: any) => {
+    const dateValue = new Date(data.date);
+    if (isNaN(dateValue.getTime())) {
+      throw new Error('Date invalide');
+    }
+
     const payload = {
       id: data.id,
       title: data.title,
-      date: new Date(data.date).toISOString(),
+      date: dateValue.toISOString(),
       description: data.description,
       img: data.img,
       content: data.content,
