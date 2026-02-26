@@ -1,7 +1,7 @@
 import { RegisterForm } from "@/components/login/register-form";
 import { Logo } from "@/components/shared/logo";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Minus } from "lucide-react";
 
 export default function RegisterPage() {
   return (
@@ -24,7 +24,7 @@ export default function RegisterPage() {
             <ArrowLeft className="size-3" />
             Retour à l&apos;accueil
           </Link>
-          <span>•</span>
+          <Minus className="size-3 inline-block" />
           <Link
             href="/login"
             className="hover:text-foreground underline underline-offset-4 transition-colors"
