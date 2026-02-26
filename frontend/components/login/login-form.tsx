@@ -95,6 +95,13 @@ export function LoginForm({
             {isSubmitting ? "Connexion..." : "Se connecter"}
           </Button>
         </Field>
+
+        <p className="text-center text-muted-foreground text-xs">
+          Pas encore de compte ?{' '}
+          <a href="/register" className="text-foreground hover:underline underline-offset-4 transition-colors">
+            Créer un compte
+          </a>
+        </p>
       </FieldGroup>
     </form>
   );
