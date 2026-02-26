@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -12,16 +12,24 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@/lib/api";
 
-const registerSchema = z.object({
-  id: z.string()
-    .min(3, "L'identifiant doit contenir au moins 3 caractères")
-    .regex(/^[a-z0-9_-]+$/, "Uniquement lettres minuscules, chiffres, tirets et underscores"),
-  password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères"),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Les mots de passe ne correspondent pas",
-  path: ["confirmPassword"],
-});
+const registerSchema = z
+  .object({
+    id: z
+      .string()
+      .min(3, "L'identifiant doit contenir au moins 3 caractères")
+      .regex(
+        /^[a-z0-9_-]+$/,
+        "Uniquement lettres minuscules, chiffres, tirets et underscores",
+      ),
+    password: z
+      .string()
+      .min(6, "Le mot de passe doit contenir au moins 6 caractères"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Les mots de passe ne correspondent pas",
+    path: ["confirmPassword"],
+  });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
@@ -44,17 +52,23 @@ export function RegisterForm({
   async function onSubmit(values: RegisterFormValues) {
     setError(null);
     try {
-      await api.post('/signup', {
+      await api.post("/signup", {
         id: values.id,
         password: values.password,
       });
-      
+
       setSuccess(true);
       setTimeout(() => {
-        router.push('/login');
+        router.push("/login");
       }, 2000);
-    } catch (err: any) {
-      if (err.status === 409) {
+    } catch (err) {
+      const error = err instanceof Error ? err : new Error("Unknown error");
+      if (
+        err &&
+        typeof err === "object" &&
+        "status" in err &&
+        err.status === 409
+      ) {
         setError("Cet identifiant est déjà utilisé.");
       } else {
         setError("Une erreur est survenue. Veuillez réessayer.");
@@ -99,11 +113,11 @@ export function RegisterForm({
 
         <Field>
           <FieldLabel htmlFor="id">Identifiant</FieldLabel>
-          <Input 
-            id="id" 
-            placeholder="votre_identifiant" 
-            autoComplete="username" 
-            {...register("id")} 
+          <Input
+            id="id"
+            placeholder="votre_identifiant"
+            autoComplete="username"
+            {...register("id")}
           />
           {errors.id && (
             <p className="text-destructive text-xs mt-1">{errors.id.message}</p>
@@ -112,27 +126,33 @@ export function RegisterForm({
 
         <Field>
           <FieldLabel htmlFor="password">Mot de passe</FieldLabel>
-          <Input 
-            id="password" 
-            type="password" 
-            autoComplete="new-password" 
-            {...register("password")} 
+          <Input
+            id="password"
+            type="password"
+            autoComplete="new-password"
+            {...register("password")}
           />
           {errors.password && (
-            <p className="text-destructive text-xs mt-1">{errors.password.message}</p>
+            <p className="text-destructive text-xs mt-1">
+              {errors.password.message}
+            </p>
           )}
         </Field>
 
         <Field>
-          <FieldLabel htmlFor="confirmPassword">Confirmer le mot de passe</FieldLabel>
-          <Input 
-            id="confirmPassword" 
-            type="password" 
-            autoComplete="new-password" 
-            {...register("confirmPassword")} 
+          <FieldLabel htmlFor="confirmPassword">
+            Confirmer le mot de passe
+          </FieldLabel>
+          <Input
+            id="confirmPassword"
+            type="password"
+            autoComplete="new-password"
+            {...register("confirmPassword")}
           />
           {errors.confirmPassword && (
-            <p className="text-destructive text-xs mt-1">{errors.confirmPassword.message}</p>
+            <p className="text-destructive text-xs mt-1">
+              {errors.confirmPassword.message}
+            </p>
           )}
         </Field>
 

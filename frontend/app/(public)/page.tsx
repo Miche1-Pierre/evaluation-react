@@ -24,10 +24,18 @@ export default function HomePage() {
     );
   }
 
-  if (isError || !conferences?.length) {
+  if (isError) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <p className="text-muted-foreground text-lg">Impossible de charger les conférences.</p>
+      </div>
+    );
+  }
+
+  if (!conferences?.length) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-muted-foreground text-lg">Aucune conférence pour le moment.</p>
       </div>
     );
   }
