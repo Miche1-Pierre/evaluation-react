@@ -15,11 +15,11 @@ export const conferenceService = {
   },
 
   create(payload: ConferenceCreatePayload): Promise<Conference> {
-    return api.post<Conference>('/conference', { conference: payload });
+    return api.post<Conference>('/conference', payload);
   },
 
   update(id: string, payload: ConferenceUpdatePayload): Promise<Conference> {
-    return api.patch<Conference>(`/conference?id=${id}`, { conference: payload });
+    return api.patch<Conference>(`/conference?id=${id}`, payload);
   },
 
   delete(id: string): Promise<void> {

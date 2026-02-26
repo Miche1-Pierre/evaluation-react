@@ -174,8 +174,8 @@ async function seedConferences() {
         { firstname: 'Bruce', lastname: 'Schneier' },
       ],
       stakeholders: [
-        { firstname: 'CrowdStrike', lastname: '', job: 'Sponsor' },
-        { firstname: 'Kaspersky', lastname: '', job: 'Sponsor' },
+        { firstname: 'CrowdStrike', lastname: 'Team', job: 'Sponsor' },
+        { firstname: 'Kaspersky', lastname: 'Lab', job: 'Sponsor' },
       ],
       design: {
         mainColor: '#ef4444',
@@ -201,8 +201,8 @@ async function seedConferences() {
         { firstname: 'Jessie', lastname: 'Frazelle' },
       ],
       stakeholders: [
-        { firstname: 'HashiCorp', lastname: '', job: 'Sponsor' },
-        { firstname: 'GitLab', lastname: '', job: 'Partenaire' },
+        { firstname: 'HashiCorp', lastname: 'Inc', job: 'Sponsor' },
+        { firstname: 'GitLab', lastname: 'Team', job: 'Partenaire' },
       ],
       design: {
         mainColor: '#10b981',
@@ -230,8 +230,8 @@ async function seedConferences() {
         { firstname: 'Kent', lastname: 'C. Dodds' },
       ],
       stakeholders: [
-        { firstname: 'Vercel', lastname: '', job: 'Sponsor Platinum' },
-        { firstname: 'Meta', lastname: '', job: 'Sponsor Gold' },
+        { firstname: 'Vercel', lastname: 'Inc', job: 'Sponsor Platinum' },
+        { firstname: 'Meta', lastname: 'Team', job: 'Sponsor Gold' },
       ],
       design: {
         mainColor: '#06b6d4',
@@ -257,8 +257,8 @@ async function seedConferences() {
         { firstname: 'Brendan', lastname: 'Burns' },
       ],
       stakeholders: [
-        { firstname: 'CNCF', lastname: '', job: 'Organisateur' },
-        { firstname: 'AWS', lastname: '', job: 'Sponsor' },
+        { firstname: 'CNCF', lastname: 'Foundation', job: 'Organisateur' },
+        { firstname: 'AWS', lastname: 'Team', job: 'Sponsor' },
       ],
       design: {
         mainColor: '#f59e0b',
@@ -285,8 +285,8 @@ async function seedConferences() {
         { firstname: 'DJ', lastname: 'Patil' },
       ],
       stakeholders: [
-        { firstname: 'Databricks', lastname: '', job: 'Sponsor' },
-        { firstname: 'Snowflake', lastname: '', job: 'Partenaire' },
+        { firstname: 'Databricks', lastname: 'Inc', job: 'Sponsor' },
+        { firstname: 'Snowflake', lastname: 'Team', job: 'Partenaire' },
       ],
       design: {
         mainColor: '#ec4899',
@@ -314,7 +314,7 @@ async function seedConferences() {
       ],
       stakeholders: [
         { firstname: 'Google', lastname: 'Flutter', job: 'Sponsor' },
-        { firstname: 'Apple', lastname: '', job: 'Partenaire' },
+        { firstname: 'Apple', lastname: 'Developer', job: 'Partenaire' },
       ],
       design: {
         mainColor: '#14b8a6',
@@ -330,7 +330,7 @@ async function seedConferences() {
     try {
       await request('/conference', {
         method: 'POST',
-        body: JSON.stringify({ conference: conf }),
+        body: JSON.stringify(conf),
       });
       console.log(`✅ Created: ${conf.title}`);
       created++;
