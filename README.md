@@ -1,4 +1,4 @@
-# 🎬 Plateforme de Conférences Tech
+# 🎬 Plateforme de Conférences
 
 Une plateforme moderne de gestion et de découverte de conférences inspirée de Netflix et Arte, développée avec Next.js 16 et React 19.
 
@@ -6,25 +6,25 @@ Une plateforme moderne de gestion et de découverte de conférences inspirée de
 
 ### Pour tous les utilisateurs
 
-- 🏠 **Page d'accueil** - Découvrez les conférences avec un hero dynamique et une grille stylisée
-- 🔍 **Détails de conférence** - Informations complètes : speakers, stakeholders, localisation OpenStreetMap
-- ❤️ **Favoris** - Sauvegardez vos conférences préférées (stockage local, sans connexion requise)
-- 🌓 **Thème clair/sombre** - Basculez entre les modes avec persistance système
-- 📱 **Design responsive** - Interface adaptée mobile, tablette et desktop
+- **Page d'accueil** - Découvrez les conférences avec un hero dynamique et une grille stylisée
+- **Détails de conférence** - Informations complètes : speakers, stakeholders, localisation OpenStreetMap
+- **Favoris** - Sauvegardez vos conférences préférées (stockage local, sans connexion requise)
+- **Thème clair/sombre** - Basculez entre les modes avec persistance système
+- **Design responsive** - Interface adaptée mobile, tablette et desktop
 
 ### Pour les administrateurs
 
-- 🔐 **Authentification JWT** - Connexion sécurisée avec gestion de rôles
-- ➕ **Création de conférences** - Formulaire complet avec upload d'image ou URL
-- ✏️ **Édition** - Modification de tous les champs y compris speakers et coordonnées
-- 🗑️ **Suppression** - Gestion complète du cycle de vie
-- 🎨 **Génération automatique de couleurs** - Extraction depuis les images avec optimisation dark mode
-- 👥 **Gestion des utilisateurs** - Promotion/rétrogradation des rôles et suppression (avec protection anti-auto-modification)
+- **Authentification JWT** - Connexion sécurisée avec gestion de rôles
+- **Création de conférences** - Formulaire complet avec upload d'image ou URL
+- **Édition** - Modification de tous les champs y compris speakers et coordonnées
+- **Suppression** - Gestion complète du cycle de vie
+- **Génération automatique de couleurs** - Extraction depuis les images avec optimisation dark mode
+- **Gestion des utilisateurs** - Promotion/rétrogradation des rôles et suppression (avec protection anti-auto-modification)
 
 ### Pour les nouveaux utilisateurs
 
-- 📝 **Inscription** - Création de compte avec validation Zod
-- 🔑 **Connexion** - Authentification persistante avec redirection automatique
+- **Inscription** - Création de compte avec validation Zod
+- **Connexion** - Authentification persistante avec redirection automatique
 
 ## 🚀 Technologies
 
@@ -172,4 +172,4 @@ MIT
 
 ## 👤 Auteur
 
-Développé dans le cadre d'une évaluation React/Next.js
+Développé dans le cadre d'une évaluation React MNS
