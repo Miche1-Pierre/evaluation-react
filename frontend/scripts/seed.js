@@ -352,7 +352,7 @@ async function seedConferences() {
             title: 'Animation Classique : L\'Art du Cartoon',
             date: '2026-09-12T09:00:00Z',
             description: 'Replongez dans l\'âge d\'or de l\'animation avec les techniques qui ont fait rêver des générations.',
-            img: 'https://imgs.search.brave.com/55t3Be03faPUJfdZeDhL_KhOs23uPba_fBXI6fjmJI4/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pLnNlcnZpbWcuY29tL3UvZjU3LzE4LzIxLzU1LzE4L3doMjV3YjEwLmpwZw',
+            img: 'https://m.media-amazon.com/images/M/MV5BNzRmMjUyM2YtZjM0NS00OTg2LTgwZjEtY2NiNTA0ZjlkN2RlXkEyXkFqcGc@._V1_QL75_UX296_.jpg',
             content: '<p>Découvrez les secrets des maîtres de l\'animation classique. Des studios Warner Bros aux techniques de Chuck Jones, explorez l\'héritage des Looney Tunes et leur impact culturel.</p><p>Masterclass, ateliers pratiques et projections exclusives au programme.</p>',
             duration: '1 jour',
             osMap: {
@@ -380,7 +380,7 @@ async function seedConferences() {
             title: 'VFX & Animation : la super vitesse',
             date: '2026-10-05T10:00:00Z',
             description: 'Les effets visuels et l\'animation au service des histoires les plus folles. Techniques, outils et workflows professionnels.',
-            img: 'https://imgs.search.brave.com/4HBvWoJlaBT7sEQ5H-5qZ8ub4lf3wKQAJB4fWM5Au-k/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cuc2VyaWVvdXNseS5jb20vYXBwL3VwbG9hZHMvMjAyMS8wNy9iaXAtYmlwLWV0LWNveW90ZS0xLmpwZz93aWR0aD03NjgmaGVpZ2h0PTQzMiZmaXQ9Y292ZXI',
+            img: 'https://m.media-amazon.com/images/M/MV5BNTY3YjU1NTYtMjU4Yy00OTkwLTg2MjEtMjVjMDBkNmJiNmIyXkEyXkFqcGc@._V1_QL75_UX291_.jpg',
             content: '<p>Du storyboard à la post-production, maîtrisez la chaîne complète de création d\'effets visuels. Découvrez comment les studios créent ces scènes d\'action spectaculaires.</p>',
             duration: '2 jours',
             osMap: {
@@ -408,7 +408,7 @@ async function seedConferences() {
             title: 'Gravity Lecon',
             date: '2026-11-18T14:00:00Z',
             description: 'De Tex Avery à Chuck Jones, retracez l\'histoire des personnages iconiques qui ont marqué la culture populaire.',
-            img: 'https://imgs.search.brave.com/Z-w1hOC8J52xqk7Xy3EyGKHqpk1oCY3UtgxSjcp62kM/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pLnNlcnZpbWcuY29tL3UvZjU3LzE4LzIxLzU1LzE4L2ZvbmRfZTExLmpwZw',
+            img: 'https://m.media-amazon.com/images/M/MV5BZjY1NDYyYmItNGFhMy00MjI2LTkyNGMtMGNkMzVmZGMyZmVlXkEyXkFqcGc@._V1_QL75_UX364_.jpg',
             content: '<p>Plongez dans l\'univers des cartoons qui ont façonné l\'animation américaine. Analyse culturelle, techniques narratives et impact sociétal de ces œuvres intemporelles.</p>',
             duration: '1 jour',
             osMap: {
@@ -436,7 +436,7 @@ async function seedConferences() {
             title: 'Les chutes',
             date: '2026-12-08T09:30:00Z',
             description: 'Workflows, pipelines et outils pour produire de l\'animation de qualité studio. Du concept art au rendering final.',
-            img: 'https://imgs.search.brave.com/DBnmju8tsp1Rd2SjKIWYmcUJ2pjM0RpbXMH8EQn7Cxo/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly93d3cuZWNyYW5sYXJnZS5jb20vY29udGVudC91cGxvYWRzLzIwMTgvMDgvbG9vbmV5LXR1bmVzLXBhc3NlbnQtYS1sLWFjdGlvbi1sZXMtcGhvdG8td2lsbC1lLWNveW90ZS0xMDMyOTMxLTMyMHgxNzAuanBn',
+            img: 'https://m.media-amazon.com/images/M/MV5BN2E4NzQ2MzktMmEyNi00ZWI4LWJmN2YtNmIyZDZkOTZmZWNkXkEyXkFqcGc@._V1_QL75_UX364_.jpg',
             content: '<p>Maîtrisez les outils professionnels : Maya, Blender, Houdini, Unreal Engine. Découvrez les workflows des plus grands studios d\'animation 3D.</p>',
             duration: '3 jours',
             osMap: {
@@ -464,7 +464,7 @@ async function seedConferences() {
             title: 'Lecon de voltige',
             date: '2027-02-22T10:00:00Z',
             description: 'Comment raconter des histoires mémorables à travers l\'animation. Structure narrative, arcs émotionnels et timing.',
-            img: 'https://imgs.search.brave.com/2rO6q_VLMu5KPPvSDmxlbVwkNlkQinayqbA83Fi3njM/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly93d3cuZWNyYW5sYXJnZS5jb20vY29udGVudC91cGxvYWRzLzIwMTgvMDgvbG9vbmV5LXR1bmVzLXBhc3NlbnQtYS1sLWFjdGlvbi1sZXMtcGhvdG8td2lsbC1lLWNveW90ZS0xMDMyOTI5LTMyMHgxNzAuanBn',
+            img: 'https://m.media-amazon.com/images/M/MV5BZWY0ZGY3MmUtMmQyYy00M2YxLTliZWUtMTcwZGYzY2RhOWYyXkEyXkFqcGc@._V1_FMjpg_UX780_.jpg',
             content: '<p>Le storytelling est au cœur de toute grande animation. Apprenez des maîtres comment construire des personnages attachants et des histoires qui résonnent avec le public.</p>',
             duration: '2 jours',
             osMap: {
