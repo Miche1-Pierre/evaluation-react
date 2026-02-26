@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { FavoriteButton } from "@/components/shared/favorite-button";
 import { CalendarDays, Clock, MapPin, Users, ArrowLeft } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -85,6 +86,16 @@ export default function ConferenceDetailPage({ params }: PageProps) {
             Retour
           </Link>
         </Button>
+
+        <div className="absolute top-20 right-6 z-10">
+          <FavoriteButton 
+            conferenceId={conference.id}
+            showText
+            variant="outline"
+            size="default"
+            className="text-white border-white/30 hover:bg-white/10 hover:text-white"
+          />
+        </div>
 
         <div className="absolute bottom-0 left-0 right-0 z-10 px-8 pb-10 md:px-16 max-w-3xl">
           <Badge
