@@ -23,6 +23,6 @@ export const conferenceService = {
   },
 
   delete(id: string): Promise<void> {
-    return api.delete<void>(`/conference?id=${id}`);
+    return api.delete<void>(`/conference/${id}`);
   },
 };
