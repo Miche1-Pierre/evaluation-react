@@ -1,21 +1,18 @@
-'use client';
+"use client";
 
-import { use } from 'react';
-import { ConferenceForm } from '@/components/admin/conferences/conference-form';
-import {
-  useConference,
-  useUpdateConference,
-} from '@/hooks/use-conferences';
-import { useRouter } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
+import { use } from "react";
+import { ConferenceForm } from "@/components/admin/conferences/conference-form";
+import { useConference, useUpdateConference } from "@/hooks/use-conferences";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function EditConferencePage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  readonly params: Promise<{ id: string }>;
 }) {
   const router = useRouter();
   const { id } = use(params);
@@ -23,11 +20,11 @@ export default function EditConferencePage({
   const updateConference = useUpdateConference();
 
   const handleSubmit = async (data: any) => {
-    console.log('handleSubmit called with data:', data);
+    console.log("handleSubmit called with data:", data);
     try {
       const dateValue = new Date(data.date);
-      if (isNaN(dateValue.getTime())) {
-        throw new Error('Date invalide');
+      if (Number.isNaN(dateValue.getTime())) {
+        throw new Error("Date invalide");
       }
 
       const payload = {
@@ -43,22 +40,25 @@ export default function EditConferencePage({
         },
         speakers: data.speakers || [],
         stakeholders: data.stakeholders || [],
-        osMap: data.osMap ? {
-          ...data.osMap,
-          // Remove coordinates if not valid
-          coordinates: (data.osMap.coordinates && 
-                       Array.isArray(data.osMap.coordinates) && 
-                       data.osMap.coordinates.length === 2)
-            ? data.osMap.coordinates
-            : undefined,
-        } : undefined,
+        osMap: data.osMap
+          ? {
+              ...data.osMap,
+              // Remove coordinates if not valid
+              coordinates:
+                data.osMap.coordinates &&
+                Array.isArray(data.osMap.coordinates) &&
+                data.osMap.coordinates.length === 2
+                  ? data.osMap.coordinates
+                  : undefined,
+            }
+          : undefined,
       };
 
-      console.log('Updating conference with payload:', payload);
+      console.log("Updating conference with payload:", payload);
       await updateConference.mutateAsync({ id, payload });
-      router.push('/admin/conferences');
+      router.push("/admin/conferences");
     } catch (error) {
-      console.error('Error updating conference:', error);
+      console.error("Error updating conference:", error);
       throw error;
     }
   };
