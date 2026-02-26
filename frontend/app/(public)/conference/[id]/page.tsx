@@ -89,7 +89,7 @@ export default function ConferenceDetailPage({ params }: PageProps) {
         </Button>
 
         <div className="absolute top-20 right-6 z-10">
-          <FavoriteButton 
+          <FavoriteButton
             conferenceId={conference.id}
             showText
             variant="outline"

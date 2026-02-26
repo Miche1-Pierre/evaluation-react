@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { ConferenceForm } from '@/components/admin/conferences/conference-form';
-import { useCreateConference } from '@/hooks/use-conferences';
-import { useRouter } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { ConferenceForm } from "@/components/admin/conferences/conference-form";
+import { useCreateConference } from "@/hooks/use-conferences";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function NewConferencePage() {
   const router = useRouter();
@@ -14,8 +14,8 @@ export default function NewConferencePage() {
   const handleSubmit = async (data: any) => {
     try {
       const dateValue = new Date(data.date);
-      if (isNaN(dateValue.getTime())) {
-        throw new Error('Date invalide');
+      if (Number.isNaN(dateValue.getTime())) {
+        throw new Error("Date invalide");
       }
 
       const payload = {
@@ -32,23 +32,31 @@ export default function NewConferencePage() {
         },
         speakers: data.speakers || [],
         stakeholders: data.stakeholders || [],
-        osMap: data.osMap ? {
-          ...data.osMap,
-          // Remove coordinates if not valid
-          coordinates: (data.osMap.coordinates && 
-                       Array.isArray(data.osMap.coordinates) && 
-                       data.osMap.coordinates.length === 2)
-            ? data.osMap.coordinates
-            : undefined,
-        } : undefined,
+        osMap: data.osMap
+          ? {
+              ...data.osMap,
+              // Remove coordinates if not valid
+              coordinates:
+                data.osMap.coordinates &&
+                Array.isArray(data.osMap.coordinates) &&
+                data.osMap.coordinates.length === 2
+                  ? data.osMap.coordinates
+                  : undefined,
+            }
+          : undefined,
       };
 
-      console.log('Creating conference with payload:', { ...payload, img: payload.img.slice(0, 50) + '...' });
+      console.log("Creating conference with payload:", {
+        ...payload,
+        img: payload.img.slice(0, 50) + "...",
+      });
       await createConference.mutateAsync(payload);
-      router.push('/admin/conferences');
+      router.push("/admin/conferences");
     } catch (error) {
-      console.error('Failed to create conference:', error);
-      alert(`Erreur lors de la création: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
+      console.error("Failed to create conference:", error);
+      alert(
+        `Erreur lors de la création: ${error instanceof Error ? error.message : "Erreur inconnue"}`,
+      );
     }
   };
 

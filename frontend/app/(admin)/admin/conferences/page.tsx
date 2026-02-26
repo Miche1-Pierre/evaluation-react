@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useConferences, useDeleteConference } from '@/hooks/use-conferences';
-import { Button } from '@/components/ui/button';
+import { useConferences, useDeleteConference } from "@/hooks/use-conferences";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,14 +19,14 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Plus, Pencil, Trash2 } from 'lucide-react';
-import Link from 'next/link';
-import { useState } from 'react';
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
+} from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Plus, Pencil, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 export default function ConferencesPage() {
   const { data: conferences, isLoading } = useConferences();
@@ -88,11 +88,11 @@ export default function ConferencesPage() {
                     {conference.title}
                   </TableCell>
                   <TableCell>
-                    {format(new Date(conference.date), 'dd MMM yyyy', {
+                    {format(new Date(conference.date), "dd MMM yyyy", {
                       locale: fr,
                     })}
                   </TableCell>
-                  <TableCell>{conference.duration || '-'}</TableCell>
+                  <TableCell>{conference.duration || "-"}</TableCell>
                   <TableCell>
                     <div className="flex gap-1">
                       <div
