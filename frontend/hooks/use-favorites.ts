@@ -1,62 +1,28 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { favoriteService } from '@/services/favorite-service';
-
-export const favoriteKeys = {
-  all: ['favorites'] as const,
-  detail: (id: string) => ['favorite', id] as const,
-};
+import { useFavoritesStore } from '@/store/favorites-store';
+import { useConferences } from './use-conferences';
 
 export function useFavorites() {
-  return useQuery({
-    queryKey: favoriteKeys.all,
-    queryFn: favoriteService.getAll,
-  });
+  const favoriteIds = useFavoritesStore((state) => state.favoriteIds);
+  const { data: allConferences = [], isLoading } = useConferences();
+  
+  // Filter conferences by favorite IDs
+  const favorites = allConferences.filter((conf) => favoriteIds.includes(conf._id));
+  
+  return { data: favorites, isLoading };
 }
 
 export function useIsFavorite(conferenceId: string) {
-  return useQuery({
-    queryKey: favoriteKeys.detail(conferenceId),
-    queryFn: () => favoriteService.isFavorite(conferenceId),
-    enabled: !!conferenceId,
-  });
-}
-
-export function useAddFavorite() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (conferenceId: string) => favoriteService.add(conferenceId),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: favoriteKeys.all });
-    },
-  });
-}
-
-export function useRemoveFavorite() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (conferenceId: string) => favoriteService.remove(conferenceId),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: favoriteKeys.all });
-    },
-  });
+  const isFavorite = useFavoritesStore((state) => state.isFavorite(conferenceId));
+  return { data: { isFavorite }, isLoading: false };
 }
 
 export function useToggleFavorite() {
-  const addFavorite = useAddFavorite();
-  const removeFavorite = useRemoveFavorite();
-  const qc = useQueryClient();
-
-  return useMutation({
-    mutationFn: async ({ conferenceId, isFavorite }: { conferenceId: string; isFavorite: boolean }) => {
-      if (isFavorite) {
-        await removeFavorite.mutateAsync(conferenceId);
-      } else {
-        await addFavorite.mutateAsync(conferenceId);
-      }
+  const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
+  
+  return {
+    mutateAsync: async ({ conferenceId }: { conferenceId: string; isFavorite: boolean }) => {
+      toggleFavorite(conferenceId);
     },
-    onSuccess: (_, { conferenceId }) => {
-      qc.invalidateQueries({ queryKey: favoriteKeys.all });
-      qc.invalidateQueries({ queryKey: favoriteKeys.detail(conferenceId) });
-    },
-  });
+    isPending: false,
+  };
 }
