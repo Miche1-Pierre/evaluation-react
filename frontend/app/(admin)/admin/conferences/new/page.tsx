@@ -12,30 +12,36 @@ export default function NewConferencePage() {
   const createConference = useCreateConference();
 
   const handleSubmit = async (data: any) => {
-    const dateValue = new Date(data.date);
-    if (isNaN(dateValue.getTime())) {
-      throw new Error('Date invalide');
+    try {
+      const dateValue = new Date(data.date);
+      if (isNaN(dateValue.getTime())) {
+        throw new Error('Date invalide');
+      }
+
+      const payload = {
+        id: data.id,
+        title: data.title,
+        date: dateValue.toISOString(),
+        description: data.description,
+        img: data.img,
+        content: data.content,
+        duration: data.duration || undefined,
+        design: {
+          mainColor: data.mainColor,
+          secondColor: data.secondColor,
+        },
+        speakers: data.speakers || [],
+        stakeholders: data.stakeholders || [],
+        osMap: data.osMap || undefined,
+      };
+
+      console.log('Creating conference with payload:', { ...payload, img: payload.img.slice(0, 50) + '...' });
+      await createConference.mutateAsync(payload);
+      router.push('/admin/conferences');
+    } catch (error) {
+      console.error('Failed to create conference:', error);
+      alert(`Erreur lors de la création: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
     }
-
-    const payload = {
-      id: data.id,
-      title: data.title,
-      date: dateValue.toISOString(),
-      description: data.description,
-      img: data.img,
-      content: data.content,
-      duration: data.duration || undefined,
-      design: {
-        mainColor: data.mainColor,
-        secondColor: data.secondColor,
-      },
-      speakers: data.speakers || [],
-      stakeholders: data.stakeholders || [],
-      osMap: data.osMap || undefined,
-    };
-
-    await createConference.mutateAsync(payload);
-    router.push('/admin/conferences');
   };
 
   return (

@@ -19,7 +19,7 @@ export const conferenceService = {
   },
 
   update(id: string, payload: ConferenceUpdatePayload): Promise<Conference> {
-    return api.patch<Conference>(`/conference?id=${id}`, payload);
+    return api.patch<Conference>(`/conference/${id}`, payload);
   },
 
   delete(id: string): Promise<void> {
